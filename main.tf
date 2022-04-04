@@ -75,10 +75,6 @@ resource "aws_route_table_association" "a" {
 }
 
 # 6. Create Security Group to allow port 22, 80, 443,
-## This security group allows:
-## i) ingress: incoming traffic for the ports 22, 80, 443 (cidr_blocks is important: from where you want to provide the access to)
-## ii) egress: outgoing traffic to the internet for all the prod-vpc cidr_blocks
-
 resource "aws_security_group" "allow_web" {
   name        = "allow_web"
   description = "Allow Web(http/s) inbound traffic"
@@ -90,7 +86,6 @@ resource "aws_security_group" "allow_web" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = [var.to_internet_ipv4]
-
   }
 
   ingress {
@@ -99,7 +94,6 @@ resource "aws_security_group" "allow_web" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = [var.to_internet_ipv4]
-
   }
 
   ingress {
@@ -154,8 +148,7 @@ resource "aws_instance" "web-server-instance" {
     network_interface_id = aws_network_interface.web-nic.id
   }
 
-  ## Volume size to be 20gib. AWS free tier provides upto 30Gib volume to use
-  ## t2.micro instance is be default 8Gib.
+  ## Volume size to be 20gib. AWS free tier provides upto 30Gib volume to use. By default, t2.micro instance is 8Gib.
   root_block_device {
     volume_size = 20
   }

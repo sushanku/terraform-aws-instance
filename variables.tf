@@ -21,7 +21,7 @@ variable "ec2_instance_type" {
 }
 
 variable "ec2_keypair" {
-  default = "deven-key"
+  default = "ssh-key-pair"
 }
 
 variable "ec2_tags" {
