@@ -51,11 +51,11 @@ Then create a network interface for the instance with the private IP. This priva
 8. `Assign an elastic IP to the network interface created in step 7`  
 Now before creating aws ec2 instance, we need to create the elastic IP which is a  reserved public IP address that you can assign to any EC2 instance in a particular region, until you choose to release it. To create elastic IP, we also need to provide the network interface and the private IP, so that the security policy we have applied will be mapped from Public IP to private IP. For more info, follow the terraform documentation [aws_eip](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip).  
 9. `Create Ubuntu Server (ec2 instance) and install/enable apache2`  
-Now finally, lets create the Ubuntu 20.04 ec2 instance. To create the ubuntu instance, you need `ami`(amazon machine image, please copy the ami id from your own region, because ami id differs from region to region), `availability_zone`, `instance_type`(t2.micro in this case which is free) and the `key_name`(please check the key name from `variables.tf`. This key name has to be the same while you saved it when you have generated the ssh key-pair from ec2 service aws console.) Other few notable things are: 
-    - `volume_size`: AWS free tier provides upto 30Gib volume to use. By default, t2.micro instance is 8Gib, 
-    - `network_interface`: We need to provide the device index and the network interface id. This will set the IP and the network interface with the index number. For example eth0, eth1..
-    - `user_data`: This user data will execute the set of commands in the ubuntu server. Here, we told it to update, install, start and enable apache2 server.
-    - `tags`: Name of the instance.
+Now finally, lets create the Ubuntu 20.04 ec2 instance. To create the ubuntu instance, you need `ami`(amazon machine image, please copy the ami id from your own region, because ami id differs from region to region), `availability_zone`, `instance_type`(t2.micro in this case which is free) and the `key_name`(please check the key name from `variables.tf`. This key name has to be the same while you saved it when you have generated the ssh key-pair from ec2 service aws console.) Other few notable things are:  
+    - `volume_size`: AWS free tier provides upto 30Gib volume to use. By default, t2.micro instance is 8Gib.  
+    - `network_interface`: We need to provide the device index and the network interface id. This will set the IP and the network interface with the index number. For example eth0, eth1..  
+    - `user_data`: This user data will execute the set of commands in the ubuntu server. Here, we told it to update, install, start and enable apache2 server.  
+    - `tags`: Name of the instance.  
 For more info, follow the terraform documentation [aws_instance](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance).  
 ## Output
 Output will helps to show the output saved as a `output <variables>`. You can output anything you like. This is like a function returning the value. Whichever value we want, we can output it. Here the outputs are: private ip, public ip and public DNS. 
