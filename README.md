@@ -43,9 +43,8 @@ Then, we need to associate the above created subnet with the route table which w
 6. `Create Security Group to allow ports 22, 80, 443,`  
 This security group allows:
     - ingress: incoming traffic for the ports 22, 80, 443 (cidr_blocks is important: from where you want to provide the access to).
-    - egress: outgoing traffic to the internet for all the prod-vpc cidr_blocks. 
-
-For more info, follow the terraform documentation [aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group).  
+    - egress: outgoing traffic to the internet for all the prod-vpc cidr_blocks.  
+     For more info, follow the terraform documentation [aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group).  
 7. `Create a network interface with an IP in the subnet created in step 4`  
 Then create a network interface for the instance with the private IP. This private ip needs to be from the subnet cidr_block. Also provide the security group, so that allowed ports in the security group will be applied in this newly created network interface. For more info, follow the terraform documentation [aws_network_interface](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface).  
 8. `Assign an elastic IP to the network interface created in step 7`  
