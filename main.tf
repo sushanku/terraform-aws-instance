@@ -4,7 +4,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.27"
+      version = "~> 5.7"
     }
   }
 
@@ -12,6 +12,7 @@ terraform {
 }
 
 # Then, initialize the aws providers with the aws platform access
+
 
 provider "aws" {
   region     = var.ec2_region
@@ -134,13 +135,17 @@ resource "aws_eip" "one" {
 }
 
 
+resource "aws_key_pair" "my_key_pair" {
+  key_name   = "my-key" # A unique name for the key pair
+  public_key = file("~/.ssh/id_ed25519.pub") # Path to your public key
+}
+
 # 9. Create Ubuntu Server and install/enable apache2
 resource "aws_instance" "web-server-instance" {
   ami               = var.ec2_image
   instance_type     = var.ec2_instance_type
   availability_zone = var.availability_zone
-  key_name          = var.ec2_keypair
-
+  key_name          = aws_key_pair.my_key_pair.key_name
 
   ## Associating this web-server-instance with the network interface we have created in step 7
   network_interface {
