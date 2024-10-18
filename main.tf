@@ -16,8 +16,6 @@ terraform {
 
 provider "aws" {
   region     = var.ec2_region
-  access_key = "ABCDEFGHIJKLMNOPQRST"
-  secret_key = "YourSecretKey/CreateAndUpdateTheKeY"
 }
 
 # 1. Create VPC
@@ -128,7 +126,6 @@ resource "aws_network_interface" "web-nic" {
 
 # 8. Assign an elastic IP to the network interface created in step 7
 resource "aws_eip" "one" {
-  vpc                       = true
   network_interface         = aws_network_interface.web-nic.id
   associate_with_private_ip = var.private_ip
   depends_on                = [aws_internet_gateway.gw]
