@@ -128,7 +128,7 @@ resource "aws_network_interface" "web-nic" {
 resource "aws_eip" "one" {
   network_interface         = aws_network_interface.web-nic.id
   associate_with_private_ip = var.private_ip
-  depends_on                = [aws_internet_gateway.gw]
+    depends_on                = [aws_instance.web-server-instance, aws_internet_gateway.gw]
 }
 
 
